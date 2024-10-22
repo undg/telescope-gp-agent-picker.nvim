@@ -12,22 +12,35 @@ Ensure you have [Telescope](https://github.com/nvim-telescope/telescope.nvim) in
 return {'undg/telescope-gp-agent-picker'}
 ```
 
-### Using Lazy.nvim
+### Using [Lazy.nvim](https://github.com/folke/lazy.nvim)
+
 ```lua
-require('undg/telescope-gp-agent-picker'}
+require('lazy').setup(
+    {'undg/telescope-gp-agent-picker',
+        config = function()
+            -- You may want to load it after telescope config
+            require('telescope').load_extension('gp-agent-picker')
+
+            -- set your desired keymap
+            vim.keymap.set('n', '<leader>fa', ':Telescope gp-agent-picker open<cr>', { desc = 'gp.nvim Agent Picker', })
+        end,
+    }
+)
 ```
 
-### Using Plug
+### Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```lua
 Plug 'undg/telescope-gp-agent-picker'
 ```
 
-### Using Packer.nvim
+### Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use 'undg/telescope-gp-agent-picker'
 ```
+
+## After installation and telescope config, load the extension:
 
 ```lua
 require('telescope').load_extension('gp-agent-picker')
