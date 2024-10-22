@@ -29,3 +29,11 @@ local models = function(opts)
         :find()
 end
 
+local function model_picker()
+    models(require('telescope.themes').get_dropdown({
+        winblend = 10,
+        previewer = false,
+    }))
+end
+
+Keymap.normal('<leader>fa', model_picker, { desc = 'gp.nvim Agent Picker', })
