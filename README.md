@@ -35,12 +35,12 @@ require('telescope').load_extension('gp-agent-picker')
 
 ## Usage
 
-Invoke the agent picker with `:Telescope gp-agent-picker`
+Invoke the agent picker with `:Telescope gp-agent-picker open` .
 
 Keymap example:
 
 ```lua
-vim.keymap.set('n', '<leader>fa', ':Telescope gp-agent-picker<cr>', {
+vim.keymap.set('n', '<leader>fa', ':Telescope gp-agent-picker open<cr>', {
       desc = 'gp.nvim Agent Picker',
 })
 ```

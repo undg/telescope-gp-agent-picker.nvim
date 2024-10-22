@@ -12,7 +12,7 @@ local models = function(opts)
     opts = opts or {}
     pickers
         .new(opts, {
-            prompt_title = is_chat and 'Models completion' or 'Models',
+            prompt_title = is_chat and 'Models CHAT' or 'Models CMP',
             finder = finders.new_table({
                 results = is_chat and require('gp')._chat_agents or require('gp')._command_agents,
             }),
@@ -36,4 +36,6 @@ local function model_picker()
     }))
 end
 
-Keymap.normal('<leader>fa', model_picker, { desc = 'gp.nvim Agent Picker', })
+Keymap.normal('fa', model_picker, { desc = 'gp.nvim Agent Picker' })
+
+return { open = model_picker }
