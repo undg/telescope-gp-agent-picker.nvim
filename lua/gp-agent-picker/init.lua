@@ -36,6 +36,4 @@ local function model_picker()
     }))
 end
 
-Keymap.normal('fa', model_picker, { desc = 'gp.nvim Agent Picker' })
-
 return { open = model_picker }
