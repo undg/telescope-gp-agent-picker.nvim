@@ -70,7 +70,7 @@ local function models(opts)
 end
 
 
-function M.model_picker()
+function M.agent_picker()
     local telescope_opts = require('telescope.themes').get_dropdown({
         winblend = 10,
         previewer = true,
