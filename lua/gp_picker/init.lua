@@ -6,15 +6,12 @@ local conf = require('telescope.config').values
 local gp = require('gp')
 
 local M = {}
+
+---@class ExtensionOpts
+---@field chat_mode? 'chat'|'command'|'both' to force a specific mode
 M.extension_opts = {}
 
----@class models
----@field chat_mode? 'chat'|'command'|'both' to force a specific mode
-
----@param extension_opts models
-
 local function models(opts)
-    vim.notify(M.extension_opts.chat_mode)
     opts = opts or {}
     local buf = vim.api.nvim_get_current_buf()
     local file_name = vim.api.nvim_buf_get_name(buf)
@@ -43,8 +40,6 @@ local function models(opts)
             previewer = require('telescope.previewers').new_buffer_previewer({
                 define_preview = function(self, entry, status)
                     local agent = gp.agents[entry[1]]
-
-                    P(status)
 
                     local lines = 'Prompt for: ' .. agent.name .. '\n'
                     lines = lines .. 'temperature: ' .. agent.model.temperature .. '; '
