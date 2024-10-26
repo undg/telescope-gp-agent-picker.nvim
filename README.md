@@ -1,47 +1,49 @@
-# gp.nvim Agent Picker
+# GP Agent Picker
 
-A Telescope extension for quick switching agents in gp.nvim.
+Telescope extension for quick agent switching in [gp.nvim](https://github.com/Robitx/gp.nvim).
 
-## Installation
+## Install
 
-Ensure you have [Telescope](https://github.com/nvim-telescope/telescope.nvim) installed. Then, add this extension to your Neovim configuration.
-
-### Using Lazy
+With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
-return {'undg/telescope-gp-agent-picker'}
+{
+  'nvim-telescope/telescope.nvim',
+  dependencies = {'undg/telescope-gp-agent-picker.nvim'},
+  config = function()
+    require('telescope').setup()
+    require('telescope').load_extension('gp_picker') -- load_extension AFTER telescope.setup!!!
+  end
+}
 ```
 
-### Using [Lazy.nvim](https://github.com/folke/lazy.nvim)
+## Use
+
+Command: `:Telescope gp_picker agent`
+
+Keymap:
+```lua
+vim.keymap.set('n', '<leader>fa', '<cmd>Telescope gp_picker agent<cr>', {desc = 'GP Agent Picker'})
+```
+
+## Config
 
 ```lua
-require('lazy').setup(
-    {'undg/telescope-gp-agent-picker',
-        config = function()
-            -- You may want to load it after telescope config
-            require('telescope').load_extension('gp-agent-picker')
-
-            -- set your desired keymap
-            vim.keymap.set('n', '<leader>fa', ':Telescope gp-agent-picker open<cr>', { desc = 'gp.nvim Agent Picker', })
-        end,
+require('telescope').setup({
+  extensions = {
+    gp_picker = {
+      chat_mode = 'combo' -- 'chat', 'command', or 'combo' (default)
     }
-)
-```
-
-## After installation and telescope config, load the extension:
-
-```lua
-require('telescope').load_extension('gp-agent-picker')
-```
-
-## Usage
-
-Invoke the agent picker with `:Telescope gp-agent-picker open`
-
-Keymap example:
-
-```lua
-vim.keymap.set('n', '<leader>fa', ':Telescope gp-agent-picker open<cr>', {
-      desc = 'gp.nvim Agent Picker',
+  }
 })
 ```
+
+`chat_mode`:
+- `chat`: Use chat agents only
+- `command`: Use command agents only  
+- `combo`: Auto-switch based on context (default)
+
+## Why use
+
+- Quick agent switching
+- Integrates gp.nvim with Telescope
