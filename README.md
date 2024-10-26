@@ -2,6 +2,8 @@
 
 Telescope extension for quick agent switching in [gp.nvim](https://github.com/Robitx/gp.nvim).
 
+![image](https://github.com/user-attachments/assets/aa4e7034-deba-4867-b134-ff46561515bb)
+
 ## Install
 
 With [lazy.nvim](https://github.com/folke/lazy.nvim):
