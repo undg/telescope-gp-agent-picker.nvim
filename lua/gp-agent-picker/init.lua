@@ -5,17 +5,39 @@ local action_state = require('telescope.actions.state')
 local conf = require('telescope.config').values
 local gp = require('gp')
 
-local models = function(opts)
+local M = {}
+M.extension_opts = {}
+
+---@class models
+---@field chat_mode? 'chat'|'command'|'both' to force a specific mode
+
+---@param extension_opts models
+
+local function models(opts)
+    vim.notify(M.extension_opts.chat_mode)
+    opts = opts or {}
     local buf = vim.api.nvim_get_current_buf()
     local file_name = vim.api.nvim_buf_get_name(buf)
     local is_chat = require('gp').not_chat(buf, file_name) == nil
 
-    opts = opts or {}
+    local prompt_title = is_chat and 'Chat Models' or 'Completion Models'
+    local results = is_chat and gp._chat_agents or gp._command_agents
+
+    if M.extension_opts.chat_mode == 'chat' then
+        prompt_title = 'Chat Models'
+        results = gp._chat_agents
+    end
+
+    if M.extension_opts.chat_mode == 'command' then
+        prompt_title = 'Command Models'
+        results = gp._chat_agents
+    end
+
     pickers
         .new(opts, {
-            prompt_title = is_chat and 'Chat Models' or 'Completion Models',
+            prompt_title = prompt_title,
             finder = finders.new_table({
-                results = is_chat and gp._chat_agents or gp._command_agents,
+                results = results,
             }),
             sorter = conf.generic_sorter(opts),
             previewer = require('telescope.previewers').new_buffer_previewer({
@@ -28,7 +50,6 @@ local models = function(opts)
                     lines = lines .. 'temperature: ' .. agent.model.temperature .. '; '
                     lines = lines .. 'top_p: ' .. agent.model.top_p .. '\n\n'
                     lines = lines .. agent.system_prompt
-
 
                     local content = vim.split(lines, '\n')
                     vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, content)
@@ -48,11 +69,18 @@ local models = function(opts)
         :find()
 end
 
-local function model_picker()
-    models(require('telescope.themes').get_dropdown({
+
+function M.model_picker()
+    local telescope_opts = require('telescope.themes').get_dropdown({
         winblend = 10,
         previewer = true,
-    }))
+    })
+
+    models(telescope_opts)
 end
 
-return { open = model_picker }
+function M.config(opts)
+    M.extension_opts = opts
+end
+
+return M

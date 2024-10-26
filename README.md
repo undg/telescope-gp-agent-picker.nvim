@@ -28,18 +28,6 @@ require('lazy').setup(
 )
 ```
 
-### Using [vim-plug](https://github.com/junegunn/vim-plug)
-
-```lua
-Plug 'undg/telescope-gp-agent-picker'
-```
-
-### Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-```lua
-use 'undg/telescope-gp-agent-picker'
-```
-
 ## After installation and telescope config, load the extension:
 
 ```lua
@@ -48,7 +36,7 @@ require('telescope').load_extension('gp-agent-picker')
 
 ## Usage
 
-Invoke the agent picker with `:Telescope gp-agent-picker open` .
+Invoke the agent picker with `:Telescope gp-agent-picker open`
 
 Keymap example:
 
